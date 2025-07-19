@@ -1,0 +1,25 @@
+loadModel(Modelica);
+loadFile("JetEngine.mo");
+getErrorString();
+
+simulate(JetEngine.StarterSystem, stopTime=10, numberOfIntervals=1000);
+getErrorString();
+
+// List all variables in the result file to see exact names
+listVariables(JetEngine.StarterSystem);
+
+// Try different possible variable names for angular velocity
+val(engineShaft.w, 10);
+val(JetEngine.StarterSystem.engineShaft.w, 10);
+val(engineShaft.shaft.w, 10);
+
+// Get values at different times
+print("t=0: ω=" + String(val(engineShaft.w, 0)) + " rad/s");
+print("t=1: ω=" + String(val(engineShaft.w, 1)) + " rad/s");  
+print("t=5: ω=" + String(val(engineShaft.w, 5)) + " rad/s");
+print("t=10: ω=" + String(val(engineShaft.w, 10)) + " rad/s");
+
+// Also try to get valve opening to verify control works
+print("Valve opening at t=2: " + String(val(valve.opening, 2)));
+
+getErrorString();
